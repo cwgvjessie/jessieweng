@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>視差廣告（第三段固定）</title>
+  <style>
+    /* 基礎排版 */
+    :root {
+      --text: #222;
+      --muted: #666;
+      --bg: #fff;
+      --accent: #0a84ff;
+      --maxw: 760px;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: var(--bg);
+      font: 16px/1.8 system-ui, -apple-system, Segoe UI, Noto Sans TC, Roboto, Helvetica, Arial, sans-serif;
+    }
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: saturate(180%) blur(6px);
+      border-bottom: 1px solid #eee;
+    }
+    header .wrap { max-width: var(--maxw); margin: 0 auto; padding: 10px 16px; }
+    header h1 { font-size: 18px; margin: 0; }
+
+    .section {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: 48px 16px;
+    }
+    .content { max-width: var(--maxw); }
+    .content p { margin: 0 0 1rem; }
+
+    /* 視差背景段落：背景慢速移動 */
+    .parallax {
+      position: relative;
+      background-image: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1600&auto=format&fit=crop');
+      background-attachment: fixed; /* 視差效果的簡易作法 */
+      background-position: center;
+      background-size: cover;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    }
+    .parallax .content { background: rgba(0,0,0,.35); padding: 24px; border-radius: 12px; }
+
+    /* 第三段：廣告圖片固定，文章滾動 */
+    .ad-section {
+      display: grid;
+      grid-template-columns: 1fr min(40vw, 520px) 1fr; /* 中欄固定區放廣告 */
+      gap: 24px;
+      align-items: start;
+      min-height: 120vh; /* 增加滾動空間 */
+    }
+    .ad-section .article {
+      grid-column: 1 / -1; /* 讓文章跨欄，與 sticky 圖片並行滾動 */
+      display: grid;
+      grid-template-columns: 1fr min(40vw, 520px) 1fr;
+      gap: 24px;
+    }
+    .ad-section .article .col-left { grid-column: 1; }
+    .ad-section .article .col-right { grid-column: 3; }
+
+    .ad-sticky {
+      grid-column: 2;
+      position: sticky; /* 核心：圖片固定 */
+      top: 84px; /* 與 header 高度協調，視需要調整 */
+      align-self: start;
+    }
+    .ad-sticky .card {
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      overflow: hidden;
+      background: #fff;
+    }
+    .ad-sticky img { display: block; width: 100%; height: auto; }
+    .ad-sticky .caption {
+      padding: 12px 14px; font-size: 14px; color: var(--muted);
+      border-top: 1px solid #eee;
+    }
+
+    /* 方便示意的長文樣式 */
+    .longtext p { text-indent: 0; }
+
+    /* RWD 微調：小螢幕時改為上下排列 */
+    @media (max-width: 860px) {
+      .ad-section,
+      .ad-section .article { grid-template-columns: 1fr; }
+      .ad-sticky { grid-column: 1; top: 72px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>視差廣告（第三段固定）</h1>
+    </div>
+  </header>
+
+  <!-- 第一段：一般內容 -->
+  <section class="section">
+    <div class="content longtext">
+      <p>公費流感、新冠疫苗同步開打。疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。</p>
+      <p>（導語／可留空）視差廣告示範。以下為示意長文，用於滾動測試。</p>
+      <p><!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>視差廣告（第三段）</title>
+<style>
+  /* 基本排版 */
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.8;
+    margin: 20px;
+    color: #111;
+  }
+  article#news-article {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  article p {
+    margin: 18px 0;
+    font-size: 16px;
+  }
+
+  /* 視差容器（放在第三段） */
+  .parallax-wrapper {
+    margin: 30px 0;               /* 使用者要求：與文章上下 margin 各留 30px */
+    position: relative;
+    overflow: hidden;             /* 圖片不會飄出容器 */
+    width: 100%;
+    display: flex;
+    justify-content: center;      /* 圖片置中 */
+    align-items: cente</p>
+    </div>
+  </section>
+
+  <!-- 第二段：視差背景 -->
+  <section class="section parallax">
+    <div class="content">
+      <h2>視差背景段落</h2>
+      <p>背景以 <code>background-attachment: fixed</code> 模擬視差，讀者滾動時背景相對較慢，營造層次感。</p>
+    </div>
+  </section>
+
+  <!-- 第三段：廣告圖片固定不動，文章持續滾動 -->
+  <section class="section ad-section">
+    <!-- sticky 廣告中欄 -->
+    <div class="ad-sticky">
+      <div class="card">
+        <img src="https://via.placeholder.com/800x1000.png?text=AD" alt="廣告" />
+        <div class="caption">廣告示意圖（請替換為正式素材）</div>
+      </div>
+    </div>
+
+    <!-- 左右兩側為長文，滾動時與 sticky 圖片並排 -->
+    <div class="article longtext">
+      <div class="col-left">
+        <p>左側文章（第一段）。r;
+    /* 設定容器高度，等於圖片高度（可改為比例式高度以適應響應） */
+    height: 883px;                /* 與圖片高度一致 */
+    box-sizing: border-box;
+  }
+
+  /* 圖片本體（可滾動） */
+  .parallax-img {
+    width: 384px;                 /* 固定寬度 384 */
+    height: 883px;                /* 固定高度 883 */
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    will-change: transform;
+    transform: translateY(0);
+    pointer-events:</p>
+        <p>左側文章（第二段）。 none;
+    display: block;
+  }
+
+  /* 手機小螢幕友善：當螢幕太窄時縮放容器高度讓視覺合理 */
+  @media (max-width: 420px) {
+    .parallax-wrapper {
+      /* 以圖片寬度佔滿容器，並依比例縮放高度 */
+      height: calc( (883 / 384) * 100vw ); /* 保持圖片比例 */
+    }
+    .parallax-img {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>
+</head>
+<body>
+
+<article id="news-article">
+
+  <p>公費流感、新冠疫苗同步開打</p>
+
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流</p>
+        <p>左側文章（第三段）。感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+
+  <!-- 第三段：放視差廣告 -->
+  <p>
+    <!-- 這裡保留段落語句（若不需要可以刪除），視差圖放在下一個 wrapper 中 -->
+    廣告說明或導語（可留空或放短文案）：
+  </p>
+
+  <div class="parallax-wrapper" data-parallax-speed="0.5">
+    <!-- 圖片檔名請放在同資料夾，或改為絕對/相對路徑 -->
+    <img src="384x883.png" alt="視差廣告" class="parallax-img" />
+  </div>
+
+  <!-- 之後繼續文章內容（正常滾動） -->
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+
+
+
+
+  <p>
+    疾管署表示，因應流感進入流行期及新冠疫情可能捲土重來，公費流感疫苗與新冠疫苗10月1日起將同步開打。首波接種對象包括65歲以上長者、孕婦、6個月以上幼兒、機構住民及照護人員、醫事與防疫人員，以及具有慢性病或重大疾病的高風險族群。
+  </p>
+
+  <!-- 你可以依原檔多複製段落來填滿頁面，方便測試滾動效果 -->
+</article>
+
+<script>
+(function () {
+  // 使用 requestAnimationFrame 做效能較好的視差
+  const wrappers = Array.from(document.querySelectorAll('.parallax-wrapper'));
+
+  // 若無視差容器就不用執行
+  if (!wrappers.length) return;
+
+  // 取出每個 wrapper 的元素狀態
+  const items = wrappers.map(w => {
+    const img = w.querySelector('.parallax-img');
+    // 允許在 HTML 上設定 data-parallax-speed（越小越慢），預設 0.5
+    const speed = parseFloat(w.getAttribute('data-parallax-speed')) || 0.5;
+    return { wrapper: w, img, speed, lastTransform: 0 };
+  });
+
+  let ticking = false;
+
+  function update() {
+    // 當前視窗高度
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    items.forEach(item => {
+      const rect = item.wrapper.getBoundingClientRect();
+      // rect.top 為 wrapper 頂端相對於視窗的位置
+      // 計算元素進入視窗後，依據進入量來做偏移
+      // 假設當 wrapper 中心對齊視窗中心時，位移最大
+      // 使用 (viewportCenter - wrapperCenter) * speed 作為 translateY
+      const wrapperCenter = rect.top + rect.height / 2;
+      const viewportCenter = vh / 2;
+      const distance = viewportCenter - wrapperCenter;
+
+      // 設定位移量（可以調整乘數強度）
+      const translateY = distance * item.speed * 0.2; // 0.2 調整視差幅度
+      // 輕微去跳動：只在差異較大時更新 transform
+      if (Math.abs(translateY - item.lastTransform) > 0.1) {
+        item.img.style.transform = `translateY(${translateY}px)`;
+        item.lastTransform = translateY;
+      }
+    });
+
+    ticking = false;
+  }
+
+  function onScrollOrResize() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
+
+  // 初始呼叫一次
+  onScrollOrResize();
+})();
+</script>
+
+</body>
+</html>
+</p>
+      </div>
+      <div class="col-right">
+        <p>右側補充說明與更多內容，確保捲動距離足夠讓讀者體會廣告固定效果。</p>
+        <p>這裡可放置更多內文或推薦文章區塊、行銷文案、CTA 等。</p>
+        <p>為了避免覆蓋，圖片使用 <code>position: sticky</code> 並設定 <code>top</code> 與頁首高度協調。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 結尾段落 -->
+  <section class="section">
+    <div class="content longtext">
+      <h2>結尾與補充</h2>
+      <p>以上為第三段插入廣告、滑到圖片時圖片固定不動、文章持續滾動的實作。請將佔位圖替換為正式廣告素材（JPG/PNG/WebP），或改為 <code>&lt;video&gt;</code> 亦可。</p>
+      <ul>
+        <li>若頁面還有固定導覽列，請調整 <code>.ad-sticky{ top: ... }</code> 避免遮蓋。</li>
+        <li>若需追蹤曝光，請於圖片外層卡片加上 <code>data-analytics</code> 或觸發 IntersectionObserver。</li>
+        <li>若需在 iOS 上改善 <code>background-attachment: fixed</code> 表現，可改用 transform 視差或 JS 方案。</li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+</html>
